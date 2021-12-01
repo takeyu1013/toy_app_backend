@@ -15,12 +15,12 @@ app.post(`/user`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/users`, async (req, res) => {
+app.get(`/users`, async (_, res) => {
   const users = await prisma.user.findMany();
-  res.json({ users });
+  res.json(users);
   console.log(users);
 });
 
-const server = app.listen(3001, () =>
+app.listen(3001, () =>
   console.log("🚀 Server ready at: http://localhost:3001")
 );
