@@ -21,6 +21,8 @@ app.get(`/users`, async (_, res) => {
   console.log(users);
 });
 
-app.listen(3001, () =>
-  console.log("🚀 Server ready at: http://localhost:3001")
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () =>
+  console.log(`🚀 Server ready at: http://localhost:${PORT}`)
 );
