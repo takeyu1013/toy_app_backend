@@ -23,6 +23,15 @@ app.get(`/users`, async (_, res) => {
   console.log(users);
 });
 
+app.get(`/users/:id`, async (req, res) => {
+  const { id }: { id?: string } = req.params;
+  const user = await prisma.user.findUnique({
+    where: { id: Number(id) },
+  });
+  res.json(user);
+  console.log(user);
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () =>
