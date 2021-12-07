@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.post(`/user`, async (req, res) => {
+app.post(`/users`, async (req, res) => {
   const result = await prisma.user.create({
     data: {
       ...req.body,
@@ -39,6 +39,17 @@ app.delete(`/users/:id`, async (req, res) => {
   });
   res.json(user);
   console.log(user);
+});
+
+app.patch(`/users/:id`, async (req, res) => {
+  const { id }: { id?: string } = req.params;
+  const user = await prisma.user.update({
+    where: { id: Number(id) },
+    data: {
+      ...req.body,
+    },
+  });
+  res.json(user);
 });
 
 const PORT = process.env.PORT || 3000;
