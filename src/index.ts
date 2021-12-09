@@ -20,7 +20,6 @@ app.post(`/users`, async (req, res) => {
 app.get(`/users`, async (_, res) => {
   const users = await prisma.user.findMany();
   res.json(users);
-  console.log(users);
 });
 
 app.get(`/users/:id`, async (req, res) => {
@@ -29,7 +28,6 @@ app.get(`/users/:id`, async (req, res) => {
     where: { id: Number(id) },
   });
   res.json(user);
-  console.log(user);
 });
 
 app.delete(`/users/:id`, async (req, res) => {
@@ -38,7 +36,6 @@ app.delete(`/users/:id`, async (req, res) => {
     where: { id: Number(id) },
   });
   res.json(user);
-  console.log(user);
 });
 
 app.patch(`/users/:id`, async (req, res) => {
@@ -50,6 +47,47 @@ app.patch(`/users/:id`, async (req, res) => {
     },
   });
   res.json(user);
+});
+
+app.get(`/microposts`, async (_, res) => {
+  const microposts = await prisma.micropost.findMany();
+  res.json(microposts);
+});
+
+app.get(`/microposts/:id`, async (req, res) => {
+  const { id }: { id?: string } = req.params;
+  const micropost = await prisma.micropost.findUnique({
+    where: { id: Number(id) },
+  });
+  res.json(micropost);
+});
+
+app.post(`/microposts`, async (req, res) => {
+  const result = await prisma.micropost.create({
+    data: {
+      ...req.body,
+    },
+  });
+  res.json(result);
+});
+
+app.patch(`/microposts/:id`, async (req, res) => {
+  const { id }: { id?: string } = req.params;
+  const micropost = await prisma.micropost.update({
+    where: { id: Number(id) },
+    data: {
+      ...req.body,
+    },
+  });
+  res.json(micropost);
+});
+
+app.delete(`/microposts/:id`, async (req, res) => {
+  const { id }: { id?: string } = req.params;
+  const micropost = await prisma.micropost.delete({
+    where: { id: Number(id) },
+  });
+  res.json(micropost);
 });
 
 const PORT = process.env.PORT || 3000;
