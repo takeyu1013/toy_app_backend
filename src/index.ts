@@ -63,9 +63,11 @@ app.get(`/microposts/:id`, async (req, res) => {
 });
 
 app.post(`/microposts`, async (req, res) => {
+  const { content, user_id }: { content: string; user_id: string } = req.body;
   const result = await prisma.micropost.create({
     data: {
-      ...req.body,
+      content,
+      user_id: Number(user_id),
     },
   });
   res.json(result);
