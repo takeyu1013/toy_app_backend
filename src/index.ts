@@ -75,10 +75,12 @@ app.post(`/microposts`, async (req, res) => {
 
 app.patch(`/microposts/:id`, async (req, res) => {
   const { id }: { id?: string } = req.params;
+  const { content, user_id }: { content: string; user_id: string } = req.body;
   const micropost = await prisma.micropost.update({
     where: { id: Number(id) },
     data: {
-      ...req.body,
+      content,
+      user_id: Number(user_id),
     },
   });
   res.json(micropost);
