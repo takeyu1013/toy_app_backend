@@ -63,11 +63,11 @@ app.get(`/microposts/:id`, async (req, res) => {
 });
 
 app.post(`/microposts`, async (req, res) => {
-  const { content, user_id }: { content: string; user_id: string } = req.body;
+  const { content, userId }: { content: string; userId: string } = req.body;
   const result = await prisma.micropost.create({
     data: {
       content,
-      user_id: Number(user_id),
+      userId: Number(userId),
     },
   });
   res.json(result);
@@ -75,12 +75,12 @@ app.post(`/microposts`, async (req, res) => {
 
 app.patch(`/microposts/:id`, async (req, res) => {
   const { id }: { id?: string } = req.params;
-  const { content, user_id }: { content: string; user_id: string } = req.body;
+  const { content, userId }: { content: string; userId: string } = req.body;
   const micropost = await prisma.micropost.update({
     where: { id: Number(id) },
     data: {
       content,
-      user_id: Number(user_id),
+      userId: Number(userId),
     },
   });
   res.json(micropost);
